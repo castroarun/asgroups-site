@@ -718,3 +718,23 @@ html:not(.js) .process-line i { transform: none; }
 @keyframes roll { 0%, 20% { transform: translateY(0); } 25%, 45% { transform: translateY(-20%); } 50%, 70% { transform: translateY(-40%); } 75%, 95% { transform: translateY(-60%); } 100% { transform: translateY(-80%); } }
 .motto { margin: 0; text-align: right; font-family: var(--font-display); font-weight: 300; font-size: 22px; line-height: 1.35; color: #D0D0D6 !important; max-width: none !important; }
 @media (max-width: 860px) { .motto { text-align: left; font-size: 19px; } }
+
+/* Business Setup page hero (from mockup A2, 11 Nov): dusk sky, centred headline, two doors */
+.sky-hero { position: relative; overflow: hidden; text-align: center; border-bottom: 1px solid var(--line); }
+.sky-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; animation: skypan 30s ease-in-out infinite alternate; }
+@keyframes skypan { from { transform: scale(1.15) translateX(-2%); } to { transform: scale(1.15) translateX(2%); } }
+.sky-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,10,12,.5) 0%, rgba(10,10,12,.3) 40%, rgba(10,10,12,.9) 85%, var(--bg) 100%); }
+.sky-inner { position: relative; padding-top: 70px; padding-bottom: 90px; display: flex; flex-direction: column; align-items: center; }
+.sky-inner .crumbs { align-self: flex-start; }
+.sky-inner .eyebrow { margin-top: 30px; }
+.sky-hero h1 { margin: 0; font-family: var(--font-display); font-weight: 200; font-size: clamp(42px, 6.4vw, 96px); line-height: 1.04; letter-spacing: -.03em; max-width: 1100px; }
+.sky-hero .lead { margin: 28px auto 0; max-width: 640px; font-size: 18px; color: #DADAE2; }
+.sky-doors { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; width: min(930px, 100%); margin-top: 52px; }
+.sky-door { display: flex; flex-direction: column; gap: 8px; text-align: left; padding: 26px 28px; border-radius: 16px; border: 1px solid rgba(255,255,255,.18); background: rgba(10,10,16,.62); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: var(--text); text-decoration: none; cursor: pointer; transition: transform .35s var(--ease), border-color .35s ease, background .35s ease; }
+.sky-door:hover { color: var(--text); transform: translateY(-6px); border-color: var(--gold); background: rgba(10,10,16,.8); }
+.sky-door .k { font-size: 12.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-light); font-weight: 600; }
+.sky-door .t { font-family: var(--font-display); font-size: 24px; }
+.sky-door .arr { display: inline-block; transition: transform .3s ease; }
+.sky-door:hover .arr { transform: translateX(6px); }
+a.sky-door:hover .arr { transform: translateY(4px); }
+@media (max-width: 860px) { .sky-inner { padding-top: 40px; padding-bottom: 60px; } .sky-door .t { font-size: 20px; } }
