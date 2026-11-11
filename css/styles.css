@@ -677,3 +677,36 @@ html:not(.js) .process-line i { transform: none; }
 .timeline.is-in > div::before { transform: scale(1); }
 .timeline > div:hover b { color: var(--text); }
 @media (prefers-reduced-motion: reduce) { .timeline::before { transform: none; } .js .timeline > div { opacity: 1; transform: none; } .timeline > div::before { transform: none; } }
+
+/* About · What we believe (11 Nov, v2): four coloured cards that slide in from the right one
+   after another and overlap like a fanned hand. No connecting line. The card whose word is
+   lit in the heading rises a little. */
+.fan { display: flex; padding: 30px 0 20px; }
+.fan .tile.value { flex: 1 1 0; min-width: 0; min-height: 300px; margin-left: -28px; padding: 32px 30px 30px 40px; border-radius: 18px; border: 0; box-shadow: -18px 10px 40px rgba(0,0,0,.45); animation: valuelift 8s ease-in-out infinite; animation-delay: calc(var(--i) * 2s); }
+.fan .tile.value:first-child { margin-left: 0; }
+.fan .tile.value::before, .fan .tile.value::after { display: none; }
+.fan .c1 { background: linear-gradient(160deg, #D9B653, var(--gold) 60%, #A8832A); color: var(--ink); transform: rotate(-2deg); z-index: 1; }
+.fan .c2 { background: linear-gradient(160deg, #F7F3EA, #E8E1D0); color: var(--ink); transform: rotate(1.5deg); z-index: 2; }
+.fan .c3 { background: linear-gradient(160deg, #1C2F66, var(--navy)); color: var(--text); transform: rotate(-1.5deg); z-index: 3; }
+.fan .c4 { background: linear-gradient(160deg, #1A1A20, #0E0E12); color: var(--text); transform: rotate(2deg); z-index: 4; outline: 1px solid rgba(227,199,122,.55); outline-offset: -1px; }
+.fan .c1 p, .fan .c2 p { color: rgba(10,10,12,.72); }
+.fan .c3 p { color: rgba(242,239,232,.78); }
+.fan .c1 .tnum, .fan .c2 .tnum { background: none; -webkit-background-clip: border-box; background-clip: border-box; color: rgba(10,10,12,.85); opacity: 1; }
+.fan .c3 .tnum { color: var(--gold-light); background: none; -webkit-background-clip: border-box; background-clip: border-box; }
+.fan .c1 .trule, .fan .c2 .trule { background: rgba(10,10,12,.5); }
+.fan .c3 .trule { background: var(--gold-light); }
+/* slide in from the right, one after another */
+.js .fan .tile.value.reveal { opacity: 0; transform: translateX(140px) rotate(6deg); transition: transform 1s var(--ease), opacity .7s ease, box-shadow .35s ease; transition-delay: calc(var(--i) * .22s); }
+.js .fan .c1.reveal.is-in { opacity: 1; transform: rotate(-2deg); }
+.js .fan .c2.reveal.is-in { opacity: 1; transform: rotate(1.5deg); }
+.js .fan .c3.reveal.is-in { opacity: 1; transform: rotate(-1.5deg); }
+.js .fan .c4.reveal.is-in { opacity: 1; transform: rotate(2deg); }
+@keyframes valuelift { 0%, 30%, 100% { translate: 0 0; } 8%, 22% { translate: 0 -14px; } }
+.fan .tile.value:hover, .js .fan .tile.value.reveal.is-in:hover { z-index: 10; transform: rotate(0deg) scale(1.04); animation: none; translate: 0 -16px; box-shadow: 0 30px 60px rgba(0,0,0,.55), 0 0 0 2px var(--gold); transition-delay: 0s; }
+@media (max-width: 860px) {
+  .fan { flex-direction: column; padding-top: 10px; }
+  .fan .tile.value { flex: 0 0 auto; margin-left: 0; margin-top: -22px; min-height: 0; padding: 26px 24px 34px; }
+  .fan .tile.value:first-child { margin-top: 0; }
+  .js .fan .tile.value.reveal:not(.is-in) { transform: translateX(80px) rotate(4deg); }
+}
+@media (prefers-reduced-motion: reduce) { .fan .tile.value { animation: none; } .js .fan .tile.value.reveal { opacity: 1; transform: none; } }
