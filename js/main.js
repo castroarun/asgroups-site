@@ -246,6 +246,31 @@
   });
 
   /* ---------- 3. motion ---------- */
+  // Vertical cards stack over each other on scroll. On phones a card is taller than the
+  // screen, so it sticks only once its bottom reaches the bottom of the screen.
+  var vcards = $$('.vcard');
+  if (vcards.length) {
+    var stackTops = function () {
+      var phone = window.innerWidth <= 860;
+      vcards.forEach(function (c, i) {
+        if (!phone) { c.style.top = ''; return; }
+        var t = Math.min(76 + i * 12, window.innerHeight - c.offsetHeight - 12 + i * 12);
+        c.style.top = t + 'px';
+      });
+    };
+    stackTops();
+    window.addEventListener('resize', stackTops);
+    window.addEventListener('load', stackTops);
+  }
+
+  // Hero constellation: scale the 640px drawing to the space available
+  var cwrap = $('.cwrap');
+  if (cwrap) {
+    var fit = function () { cwrap.style.setProperty('--cs', Math.min(1, cwrap.clientWidth / 640)); };
+    fit();
+    if ('ResizeObserver' in window) new ResizeObserver(fit).observe(cwrap); else window.addEventListener('resize', fit);
+  }
+
   // Scroll reveals
   var revealIO = 'IntersectionObserver' in window && !reduceMotion ? new IntersectionObserver(function (entries) {
     entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('is-in'); revealIO.unobserve(en.target); } });
