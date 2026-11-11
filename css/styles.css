@@ -752,3 +752,39 @@ a.sky-door:hover .arr { transform: translateY(4px); }
   .door::after { content: '→'; position: absolute; right: 20px; top: 22px; width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(227,199,122,.5); color: var(--gold-light); display: flex; align-items: center; justify-content: center; font-size: 16px; transition: background .3s ease, color .3s ease, transform .3s ease; }
   .door:hover::after { background: var(--gold); color: var(--ink); transform: translateX(4px); }
 }
+
+/* Service pages · the list of services (11 Nov): a numbered ledger instead of boxes.
+   Rows slide in one by one; a hand-drawn gold stroke underlines each keyword after its row lands;
+   hover sweeps gold across the row. The photo beside it stays in view while you read. */
+.ledger { list-style: none; margin: 8px 0 0; padding: 0; counter-reset: none; border-top: 1px solid var(--line); }
+.led { position: relative; display: grid; grid-template-columns: 64px 1fr 40px; align-items: start; gap: 6px 18px; padding: 24px 12px 24px 4px; border-bottom: 1px solid var(--line); overflow: hidden; cursor: default; }
+.led::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(201,161,59,.16), rgba(201,161,59,.03) 70%, rgba(201,161,59,0)); transform: scaleX(0); transform-origin: left; transition: transform .5s var(--ease); z-index: -1; }
+.led:hover::before { transform: scaleX(1); }
+.led-n { font-family: var(--font-display); font-weight: 200; font-size: 40px; line-height: 1; color: rgba(227,199,122,.45); transition: color .35s ease, transform .35s var(--ease); }
+.led:hover .led-n { color: var(--gold-light); transform: translateY(-2px); }
+.led-b h3 { margin: 4px 0 6px; font-family: var(--font-display); font-weight: 400; font-size: 22px; letter-spacing: -.01em; transition: transform .35s var(--ease); }
+.led:hover .led-b h3 { transform: translateX(6px); }
+.led-b p { margin: 0; color: var(--muted); font-size: 15.5px; }
+.led-a { align-self: center; justify-self: end; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(227,199,122,.35); color: var(--gold-light); display: flex; align-items: center; justify-content: center; opacity: .35; transform: translateX(-8px); transition: opacity .35s ease, transform .35s var(--ease), background .35s ease, color .35s ease; }
+.led:hover .led-a { opacity: 1; transform: none; background: var(--gold); color: var(--ink); }
+/* keyword: text turns light, a brush stroke draws under it */
+.kw { position: relative; background: none; color: var(--text); padding: 0 1px; white-space: nowrap; }
+.kw::after { content: ''; position: absolute; left: -2px; right: -4px; bottom: -6px; height: 9px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M2 8.5 C 30 4, 60 3.5, 95 5.5 S 160 8, 198 3.5' fill='none' stroke='%23C9A13B' stroke-width='3.2' stroke-linecap='round'/%3E%3Cpath d='M8 10 C 50 7.5, 120 8.5, 190 6.5' fill='none' stroke='%23E3C77A' stroke-width='1.4' stroke-linecap='round' opacity='.7'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+  clip-path: inset(0 100% 0 0); transition: clip-path .9s cubic-bezier(.6,0,.2,1); transition-delay: calc(var(--i, 0) * .12s + .55s); }
+.led.is-in .kw::after, html:not(.js) .kw::after { clip-path: inset(0 0 0 0); }
+.led:hover .kw { color: var(--gold-light); }
+/* rows arrive from the right, one after another */
+.js .ledger .led.reveal { transform: translateX(40px); transition: opacity .7s ease, transform .7s var(--ease); transition-delay: calc(var(--i, 0) * .12s); }
+.js .ledger .led.reveal.is-in { transform: none; }
+.led { isolation: isolate; }
+/* the photo stays in view while the list scrolls */
+@media (min-width: 861px) { .split { align-items: start; } .sticky-media { position: sticky; top: 100px; min-height: 520px; } }
+@media (max-width: 860px) {
+  .led { grid-template-columns: 44px 1fr; padding: 20px 4px; }
+  .led-n { font-size: 30px; }
+  .led-a { display: none; }
+  .led-b h3 { font-size: 19px; }
+
+}
+@media (prefers-reduced-motion: reduce) { .kw::after { clip-path: none; } }
