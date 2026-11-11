@@ -649,3 +649,31 @@ html:not(.js) .process-line i { transform: none; }
 .or { display: flex; align-items: center; gap: 12px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted-2); }
 .or::before, .or::after { content: ''; flex: 1; height: 1px; background: var(--line); }
 @media (max-width: 420px) { .voice .bars { display: none; } }
+
+/* About page (11 Nov): drifting glow behind sections, values that light up in turn,
+   and a timeline whose line draws down with each milestone arriving after it. */
+.glowbg { position: relative; overflow: hidden; isolation: isolate; }
+.glowbg::before { content: ''; position: absolute; z-index: -1; inset: -10%; pointer-events: none;
+  background:
+    radial-gradient(30% 45% at 15% 30%, rgba(201,161,59,.13), rgba(201,161,59,0) 70%),
+    radial-gradient(26% 32% at 78% 55%, rgba(227,199,122,.10), rgba(227,199,122,0) 70%),
+    radial-gradient(28% 35% at 60% 15%, rgba(19,34,79,.35), rgba(19,34,79,0) 70%);
+  filter: blur(10px); animation: glowdrift 18s ease-in-out infinite alternate; }
+.values .h2 { line-height: 1.15; }
+.values .dotsep { color: var(--muted-2); }
+.vw { transition: color .4s ease; animation: vwlight 8s ease-in-out infinite; animation-delay: calc(var(--i) * 2s); }
+.vw .serif { color: inherit; }
+@keyframes vwlight { 0%, 30%, 100% { color: var(--text); text-shadow: none; } 6%, 22% { color: var(--gold-light); text-shadow: 0 0 24px rgba(227,199,122,.35); } }
+.tile.value { animation: valuelight 8s ease-in-out infinite; animation-delay: calc(var(--i) * 2s); }
+@keyframes valuelight { 0%, 30%, 100% { border-color: var(--line); box-shadow: none; } 6%, 22% { border-color: rgba(227,199,122,.7); box-shadow: 0 0 0 1px rgba(227,199,122,.35), 0 0 30px rgba(201,161,59,.15); } }
+.tile.value:hover { animation: none; }
+.timeline { border-left: 0; position: relative; }
+.timeline::before { content: ''; position: absolute; left: 0; top: 4px; bottom: 4px; width: 1px; background: linear-gradient(180deg, var(--gold), rgba(201,161,59,.15)); transform-origin: top; transform: scaleY(0); transition: transform 2.4s cubic-bezier(.6,0,.2,1) .2s; }
+.timeline.is-in::before, html:not(.js) .timeline::before { transform: scaleY(1); }
+.js .timeline > div { opacity: 0; transform: translateX(-14px); transition: opacity .6s ease, transform .6s var(--ease); }
+.timeline.is-in > div { opacity: 1; transform: none; }
+.timeline > div:nth-child(n) { transition-delay: calc(.35s + var(--k, 0) * .18s); }
+.timeline > div::before { transform: scale(0); transition: transform .4s cubic-bezier(.3,1.6,.5,1); transition-delay: inherit; }
+.timeline.is-in > div::before { transform: scale(1); }
+.timeline > div:hover b { color: var(--text); }
+@media (prefers-reduced-motion: reduce) { .timeline::before { transform: none; } .js .timeline > div { opacity: 1; transform: none; } .timeline > div::before { transform: none; } }
