@@ -12,6 +12,7 @@
 - Confirm the flyer was designed by AS Groups
 
 ## Later
+- Voice note recorded inside the pop-up and delivered straight to the business WhatsApp (needs the Cloud API + file storage). Today the button opens the WhatsApp chat and the visitor holds the mic there.
 - Send enquiries automatically with the WhatsApp Cloud API (reuse Neev Careers `/api/inquiry`)
 - Custom domain on Vercel
 - Revisit testimonial options T1.2 / T1.3

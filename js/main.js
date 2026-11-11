@@ -33,6 +33,7 @@
     close: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>',
     menu: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
     tick: '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#0A0A0C" stroke-width="3" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+    mic: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>',
     play: '<svg width="30" height="30" viewBox="0 0 24 24" fill="#0A0A0C" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>'
   };
 
@@ -108,6 +109,11 @@
         '<fieldset><legend>What would you like to talk about?</legend><div class="chips">' +
           S.reasons.map(function (r) { return '<button type="button" class="chip" aria-pressed="false">' + esc(r) + '</button>'; }).join('') +
         '</div><p class="hint" id="reason-hint" hidden>Pick one so we know who should call you back.</p></fieldset>' +
+        '<a class="voice" id="voice-note" href="#" target="_blank" rel="noopener">' +
+          '<span class="mic" aria-hidden="true">' + ICON.mic + '</span>' +
+          '<span><b>Prefer to talk? Send us a voice note</b><small>Opens our WhatsApp chat — press and hold the mic to record.</small></span>' +
+          '<span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></a>' +
+        '<div class="or"><span>or type it</span></div>' +
         '<div class="fields">' +
           '<label>Your name<input class="field" name="name" autocomplete="name" required placeholder="Full name"></label>' +
           '<label>Phone / WhatsApp<input class="field" name="phone" type="tel" autocomplete="tel" inputmode="tel" required placeholder="+91"></label>' +
@@ -162,6 +168,12 @@
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     }
+  });
+
+  // Voice note: opens the business WhatsApp chat with a short intro, ready for the visitor to
+  // hold the mic. (Recording inside the page needs the server set-up planned for later.)
+  $('#voice-note').addEventListener('click', function () {
+    this.href = waLink('Hi AS Groups, I\'m sending you a voice note' + (reason ? ' about ' + reason.toLowerCase() : '') + '.');
   });
 
   form.addEventListener('submit', function (e) {
