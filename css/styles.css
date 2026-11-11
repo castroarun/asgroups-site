@@ -710,3 +710,11 @@ html:not(.js) .process-line i { transform: none; }
   .js .fan .tile.value.reveal:not(.is-in) { transform: translateX(80px) rotate(4deg); }
 }
 @media (prefers-reduced-motion: reduce) { .fan .tile.value { animation: none; } .js .fan .tile.value.reveal { opacity: 1; transform: none; } }
+
+/* Hero headline (from mockup A3, 11 Nov): "We build businesses that …" with a rolling last line */
+.roll { display: block; height: 1.12em; overflow: hidden; margin-top: .06em; font-family: var(--font-accent); font-style: italic; font-weight: 400; color: var(--gold-light); font-size: 1.08em; letter-spacing: 0; line-height: 1.12em; }
+.roll-list { display: block; animation: roll 10s cubic-bezier(.7,0,.25,1) infinite; }
+.roll-list span { display: block; height: 1.12em; }
+@keyframes roll { 0%, 20% { transform: translateY(0); } 25%, 45% { transform: translateY(-20%); } 50%, 70% { transform: translateY(-40%); } 75%, 95% { transform: translateY(-60%); } 100% { transform: translateY(-80%); } }
+.motto { margin: 0; text-align: right; font-family: var(--font-display); font-weight: 300; font-size: 22px; line-height: 1.35; color: #D0D0D6 !important; max-width: none !important; }
+@media (max-width: 860px) { .motto { text-align: left; font-size: 19px; } }
