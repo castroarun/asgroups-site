@@ -246,6 +246,27 @@
   });
 
   /* ---------- 3. motion ---------- */
+  // Phones: the "Where are you today?" strip gives a little pull to the right and springs
+  // back, so people see it can be swiped. Stops once they touch it.
+  var strip = $('.chooser .grid');
+  if (strip && !reduceMotion && 'IntersectionObserver' in window) {
+    var touched = false, peekTimer = null, peeks = 0;
+    var stop = function () { touched = true; clearTimeout(peekTimer); };
+    strip.addEventListener('touchstart', stop, { passive: true });
+    strip.addEventListener('pointerdown', stop);
+    var peek = function () {
+      if (touched || window.innerWidth > 860 || peeks >= 3) return;
+      peeks++;
+      strip.classList.remove('peek'); void strip.offsetWidth; strip.classList.add('peek');
+      peekTimer = setTimeout(peek, 5500);
+    };
+    var peekIO = new IntersectionObserver(function (en) {
+      if (en[0].isIntersecting) { peekTimer = setTimeout(peek, 600); }
+      else clearTimeout(peekTimer);
+    }, { threshold: 0.7 });
+    peekIO.observe(strip);
+  }
+
   // Vertical cards stack over each other on scroll. On phones a card is taller than the
   // screen, so it sticks only once its bottom reaches the bottom of the screen.
   var vcards = $$('.vcard');
