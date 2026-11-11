@@ -625,3 +625,13 @@ html:not(.js) .process-line i { transform: none; }
 /* Hover: the tile pops up with a gold border (beats the scroll-reveal's resting transform) */
 .tile, .js .tile.reveal.is-in { transition: transform .35s var(--ease), border-color .35s ease, box-shadow .35s ease, opacity .8s var(--ease); }
 .tile:hover, .js .tile.reveal.is-in:hover { transform: translateY(-10px) scale(1.03); border-color: var(--gold); box-shadow: 0 24px 50px rgba(0,0,0,.5), 0 0 0 1px var(--gold), 0 0 30px rgba(201,161,59,.18); z-index: 2; }
+
+/* More ways we help — icons replaced (11 Nov): a large gold number and a rule that draws itself */
+.tnum { position: static; display: block; font-size: 64px; font-weight: 200; letter-spacing: -.03em; line-height: 1; color: transparent; background: linear-gradient(160deg, var(--gold-light), var(--gold) 60%, #8A6A1F); -webkit-background-clip: text; background-clip: text; opacity: .8; transition: opacity .35s ease; }
+.tile:hover .tnum { opacity: 1; color: transparent; }
+.trule { display: block; height: 1px; margin-top: 18px; background: linear-gradient(90deg, var(--gold), rgba(201,161,59,.15)); transform: scaleX(0); transform-origin: left; transition: transform 1.2s var(--ease) calc(var(--i, 0) * .15s + .3s); width: 56%; }
+.tile.is-in .trule, html:not(.js) .trule { transform: scaleX(1); }
+.tile:hover .trule { width: 100%; transition: width .5s var(--ease); }
+.tile h3 { margin-top: 18px; }
+@media (max-width: 860px) { .tnum { font-size: 44px; } }
+@media (prefers-reduced-motion: reduce) { .trule { transform: none; } }
