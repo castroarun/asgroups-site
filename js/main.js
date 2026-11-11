@@ -199,10 +199,12 @@
       }).join('') + '</div>';
     },
     verticals: function () {
-      return S.verticals.map(function (v) {
-        return '<article class="vcard">' +
+      var total = ('0' + S.verticals.length).slice(-2);
+      return S.verticals.map(function (v, i) {
+        var n = ('0' + (i + 1)).slice(-2);
+        return '<article class="vcard v' + (i + 1) + '">' +
           '<div class="vcard-media"><img src="' + v.image + '" alt="' + esc(v.imageAlt) + '" loading="lazy">' + (v.imageNote ? '<span class="img-note">' + txt(v.imageNote) + '</span>' : '') + '</div>' +
-          '<div class="vcard-body"><span class="label">' + esc(v.name) + '</span><h3>' + txt(v.line) + '</h3>' +
+          '<div class="vcard-body"><div class="vhead"><span class="vnum" aria-hidden="true">' + n + '</span><span class="vmeta"><span class="vof">Vertical ' + n + ' of ' + total + '</span><span class="label">' + esc(v.name) + '</span></span></div><h3>' + txt(v.line) + '</h3>' +
           '<div class="tags">' + v.services.map(function (s) { return '<span class="tag' + (v.hot.indexOf(s) > -1 ? ' hot' : '') + '">' + esc(s) + '</span>'; }).join('') + '</div>' +
           '<div class="vcard-foot"><div class="count"><b>' + countAttr(v.live) + '</b><span class="live"><i class="dot"></i>Live</span></div>' +
           '<div class="count"><b>' + countAttr(v.progress) + '</b><span class="prog">In progress</span></div>' +

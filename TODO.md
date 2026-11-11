@@ -1,7 +1,7 @@
 # AS Groups site — pending work
 
-## Waiting for Arun's go-ahead
-- **"Where are you today?" band needs its own look** (noted 11 Nov 2026). Right now it looks the same as the numbers band above it, so the two read as one block. Give the chooser a separate colour treatment, e.g. the brand gold/yellow (gold background with dark text, or a gold-tinted panel), so it clearly stands apart from the counters. Do this only when Arun asks.
+## Done
+- 11 Nov: "Where are you today?" band moved to its own gold look; vertical cards numbered 01 / 02 / 03.
 
 ## Open placeholders (shown in gold [brackets] on the site)
 - Project places, dates and photos; Balaji's surname and permission
