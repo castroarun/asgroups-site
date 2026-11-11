@@ -570,3 +570,27 @@ html:not(.js) .process-line i { transform: none; }
 /* The swipe hint: the strip's contents are tugged left a little, then spring back */
 @keyframes tug { 0% { transform: translateX(0); } 35% { transform: translateX(-90px); } 55% { transform: translateX(-90px); } 80% { transform: translateX(8px); } 100% { transform: translateX(0); } }
 .chooser .grid.peek > * { animation: tug 1.4s cubic-bezier(.45,0,.2,1) both; }
+
+/* Four steps background (11 Nov):
+   - a slow, drifting gold glow behind the staircase
+   - a staircase line that joins 01 → 02 → 03 → 04 through the empty space beside them
+     (drawn by main.js), with a light that travels down it. Nothing crosses the text. */
+.steps { position: relative; isolation: isolate; }
+.steps::before { content: ''; position: absolute; z-index: -2; inset: -140px -10% -140px -10%; pointer-events: none;
+  background:
+    radial-gradient(38% 42% at 22% 30%, rgba(201,161,59,.16), rgba(201,161,59,0) 70%),
+    radial-gradient(34% 40% at 78% 75%, rgba(227,199,122,.12), rgba(227,199,122,0) 70%),
+    radial-gradient(30% 30% at 60% 20%, rgba(19,34,79,.38), rgba(19,34,79,0) 70%);
+  filter: blur(10px); animation: glowdrift 18s ease-in-out infinite alternate; }
+@keyframes glowdrift { 0% { transform: translate(0,0) scale(1); } 50% { transform: translate(4%,3%) scale(1.06); } 100% { transform: translate(-3%,5%) scale(1.02); } }
+.steps-path { position: absolute; left: 0; top: 0; z-index: -1; overflow: visible; pointer-events: none; }
+.steps-path .track { fill: none; stroke: rgba(227,199,122,.18); stroke-width: 1.5; }
+.steps-path .draw { fill: none; stroke: url(#stepsGold); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 2.6s cubic-bezier(.6,0,.2,1) .3s; }
+.steps.drawn .steps-path .draw { stroke-dashoffset: 0; }
+.steps-path .runner { fill: var(--gold-light); filter: drop-shadow(0 0 6px rgba(227,199,122,.9)); opacity: 0; transition: opacity .4s ease 2.8s; }
+.steps.drawn .steps-path .runner { opacity: 1; }
+.steps b { position: relative; }
+.steps b::after { content: ''; position: absolute; left: -7px; top: 13px; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 4px rgba(201,161,59,.15); }
+@media (prefers-reduced-motion: reduce) {
+  .steps-path .draw { stroke-dashoffset: 0; } .steps-path .runner { display: none; }
+}

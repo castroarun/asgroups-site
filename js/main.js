@@ -40,6 +40,7 @@
   var NAV = [
     ['What we do', 'index.html#what-we-do'],
     ['Projects', 'projects.html'],
+    ['Testimonials', 'index.html#clients'],
     ['About', 'about.html'],
     ['Careers', 'careers.html'],
     ['Contact', 'contact.html']
@@ -52,7 +53,7 @@
         '<a class="brand" href="index.html" aria-label="AS Groups home"><img src="assets/img/logo-mark.png" alt="" width="40" height="35"><span><b>AS GROUPS</b><small>TOGETHER WE GROW</small></span></a>' +
         '<nav class="nav-links" id="nav-links" aria-label="Main">' +
           NAV.map(function (n) {
-            var here = n[1].replace(/#.*/, '').replace('.html', '') === page;
+            var here = n[1].indexOf('#') < 0 && n[1].replace('.html', '') === page;
             return '<a href="' + n[1] + '"' + (here ? ' aria-current="page"' : '') + '>' + n[0] + '</a>';
           }).join('') +
         '</nav>' +
@@ -246,6 +247,44 @@
   });
 
   /* ---------- 3. motion ---------- */
+  // Four steps: draw a staircase line joining the step numbers, through the empty space
+  // to their left, then send a small light down it.
+  $$('.steps').forEach(function (steps) {
+    var nums = $$(':scope > div > b', steps);
+    if (nums.length < 2) return;
+    var NS = 'http://www.w3.org/2000/svg';
+    var svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('class', 'steps-path'); svg.setAttribute('aria-hidden', 'true');
+    svg.innerHTML = '<defs><linearGradient id="stepsGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C9A13B"/><stop offset="1" stop-color="#E3C77A"/></linearGradient></defs>' +
+      '<path class="track"/><path class="draw" pathLength="1"/><circle class="runner" r="4"/>';
+    steps.appendChild(svg);
+    var paths = $$('path', svg), runner = $('circle', svg), motion = null;
+    function draw() {
+      var box = steps.getBoundingClientRect(), d = '';
+      // M at 01, then for each next step: straight down, then across to its number
+      nums.forEach(function (b, i) {
+        var r = b.getBoundingClientRect();
+        var x = r.left - box.left - 5, y = r.top - box.top + 15;
+        d += i === 0 ? 'M' + x + ' ' + y : ' V' + y + ' H' + x;
+      });
+      svg.setAttribute('width', box.width); svg.setAttribute('height', box.height);
+      paths.forEach(function (p) { p.setAttribute('d', d); });
+      if (!reduceMotion) {
+        if (motion) motion.remove();
+        motion = document.createElementNS(NS, 'animateMotion');
+        motion.setAttribute('dur', '5s'); motion.setAttribute('repeatCount', 'indefinite'); motion.setAttribute('path', d);
+        runner.appendChild(motion);
+      }
+    }
+    draw();
+    window.addEventListener('resize', draw);
+    window.addEventListener('load', draw);
+    if ('IntersectionObserver' in window) {
+      var sIO = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { steps.classList.add('drawn'); setTimeout(draw, 1300); sIO.disconnect(); } }, { threshold: 0.3 });
+      sIO.observe(steps);
+    } else steps.classList.add('drawn');
+  });
+
   // Phones: the "Where are you today?" strip gives a little pull to the right and springs
   // back, so people see it can be swiped. Stops once they touch it.
   var strip = $('.chooser .grid');
