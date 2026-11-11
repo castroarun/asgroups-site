@@ -250,10 +250,11 @@
   // back, so people see it can be swiped. Stops once they touch it.
   var strip = $('.chooser .grid');
   if (strip && !reduceMotion && 'IntersectionObserver' in window) {
-    var touched = false, peekTimer = null, peeks = 0;
+    var touched = false, peekTimer = null, peeks = 0; // up to 3 tugs each time it comes into view
     var stop = function () { touched = true; clearTimeout(peekTimer); };
-    strip.addEventListener('touchstart', stop, { passive: true });
-    strip.addEventListener('pointerdown', stop);
+    // Stop only when they actually swipe the strip sideways — a finger resting on it while
+    // scrolling down the page must not cancel the hint.
+    strip.addEventListener('scroll', function () { if (strip.scrollLeft > 4) stop(); }, { passive: true });
     var peek = function () {
       if (touched || window.innerWidth > 860 || peeks >= 3) return;
       peeks++;
@@ -261,9 +262,9 @@
       peekTimer = setTimeout(peek, 5500);
     };
     var peekIO = new IntersectionObserver(function (en) {
-      if (en[0].isIntersecting) { peekTimer = setTimeout(peek, 600); }
+      if (en[0].isIntersecting) { peeks = 0; clearTimeout(peekTimer); peekTimer = setTimeout(peek, 400); }
       else clearTimeout(peekTimer);
-    }, { threshold: 0.7 });
+    }, { threshold: 0.5 });
     peekIO.observe(strip);
   }
 
