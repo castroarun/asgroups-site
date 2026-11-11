@@ -545,3 +545,14 @@ html:not(.js) .process-line i { transform: none; }
   .ribbon.dark .track { font-size: 13px; }
   .ribbon .track span { padding: 0 12px; }
 }
+
+/* Phones: "Talk to us" / "See our projects" sit below the photo circle (11 Nov) */
+@media (max-width: 860px) {
+  .hero-copy { display: contents; }
+  .hero-copy > * { flex: 0 0 100%; min-width: 0; }
+  .hero-inner { row-gap: 0; }
+  .hero-copy h1, .hero-lead { margin-top: 0; }
+  .hero-lead { margin-top: 22px; }
+  .cwrap { order: 1; margin-top: 18px; }
+  .hero-ctas { order: 2; margin-top: 8px; margin-bottom: 28px; }
+}
