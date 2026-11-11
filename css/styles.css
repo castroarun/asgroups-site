@@ -738,3 +738,17 @@ html:not(.js) .process-line i { transform: none; }
 .sky-door:hover .arr { transform: translateX(6px); }
 a.sky-door:hover .arr { transform: translateY(4px); }
 @media (max-width: 860px) { .sky-inner { padding-top: 40px; padding-bottom: 60px; } .sky-door .t { font-size: 20px; } }
+
+/* Desktop chooser (11 Nov): same black tiles as phones, no column dividers */
+@media (min-width: 861px) {
+  .chooser .grid { grid-template-columns: 1.1fr 1fr 1fr 1fr; gap: 20px; padding-top: 34px; padding-bottom: 34px; align-items: stretch; }
+  .chooser-title { border: 0 !important; padding: 0 10px 0 0; display: flex; flex-direction: column; justify-content: center; }
+  .door { background: var(--ink) !important; border: 0 !important; border-radius: 4px; color: var(--text); padding: 26px 24px 24px; min-height: 190px; justify-content: flex-start; position: relative; box-shadow: 0 16px 34px rgba(10,10,12,.3); transition: transform .35s var(--ease), box-shadow .35s ease, background .35s ease; }
+  .door:hover { background: #17171C !important; transform: translateY(-6px); box-shadow: 0 24px 44px rgba(10,10,12,.4); }
+  .door .num { color: var(--gold); font-family: var(--font-display); font-size: 34px; font-weight: 300; letter-spacing: 0; line-height: 1; }
+  .door .t { color: var(--text); font-size: 20px; line-height: 1.3; margin-top: 12px; padding-right: 40px; }
+  .door .t .arr { display: none; }
+  .door .s { color: var(--muted) !important; font-size: 13.5px; }
+  .door::after { content: '→'; position: absolute; right: 20px; top: 22px; width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(227,199,122,.5); color: var(--gold-light); display: flex; align-items: center; justify-content: center; font-size: 16px; transition: background .3s ease, color .3s ease, transform .3s ease; }
+  .door:hover::after { background: var(--gold); color: var(--ink); transform: translateX(4px); }
+}
