@@ -17,6 +17,7 @@
 ## Design language (decided)
 - Colour: **C2 ink black** `#0A0A0C`, cards `#15151A`, gold `#C9A13B` / light gold `#E3C77A`, navy `#13224F` used sparingly, ivory `#F2EFE8`.
 - Type: Manrope (light, large headings) + Inter (body) + Instrument Serif italic for one gold accent word per heading.
+- Homepage headline: "We build businesses that…" with a rolling gold line (open on time / get noticed / run smoothly / keep growing). "Clear plans. Complete execution. Lasting growth." is the Business Setup page hero (dusk sky) and the How we work motto.
 - Signatures: B2.2 photo constellation hero; "Where are you today?" gold band with black choice cards; numbered gold tiles; crossing ribbons + painted-brush quote plates (T1.4); staircase steps with self-drawing underlines; partner-network line with pulse; overlapping coloured value cards.
 - Taste: nothing static; nothing that looks AI-generated (no glassy cards on colour, no generic line icons, no repeated label + title); adjacent bands must look different; every animation also works on phones; hover = lift + gold border.
 
