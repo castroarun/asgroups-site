@@ -535,3 +535,13 @@ html:not(.js) .process-line i { transform: none; }
 .steps > div:nth-child(2) { transition-delay: .25s; } .steps > div:nth-child(2) h3::after { transition-delay: .7s; } .steps > div:nth-child(2) h3::before { transition-delay: 1.65s; }
 .steps > div:nth-child(3) { transition-delay: .5s; }  .steps > div:nth-child(3) h3::after { transition-delay: .95s; } .steps > div:nth-child(3) h3::before { transition-delay: 1.9s; }
 .steps > div:nth-child(4) { transition-delay: .75s; } .steps > div:nth-child(4) h3::after { transition-delay: 1.2s; } .steps > div:nth-child(4) h3::before { transition-delay: 2.15s; }
+
+/* Phones: slimmer ribbons so a full phrase fits on screen (11 Nov) */
+@media (max-width: 860px) {
+  .ribbons { height: 120px; margin-top: 0; }
+  .ribbon.gold { top: 42px; padding: 8px 0; transform: rotate(-5deg); }
+  .ribbon.dark { top: 42px; padding: 7px 0; transform: rotate(5deg); }
+  .ribbon.gold .track { font-size: 14px; letter-spacing: .08em; }
+  .ribbon.dark .track { font-size: 13px; }
+  .ribbon .track span { padding: 0 12px; }
+}
