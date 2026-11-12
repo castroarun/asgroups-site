@@ -765,8 +765,16 @@ a.sky-door:hover .arr { transform: translateY(4px); }
 .led-b h3 { margin: 4px 0 6px; font-family: var(--font-display); font-weight: 400; font-size: 22px; letter-spacing: -.01em; transition: transform .35s var(--ease); }
 .led:hover .led-b h3 { transform: translateX(6px); }
 .led-b p { margin: 0; color: var(--muted); font-size: 15.5px; }
-.led-a { align-self: center; justify-self: end; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(227,199,122,.35); color: var(--gold-light); display: flex; align-items: center; justify-content: center; opacity: .35; transform: translateX(-8px); transition: opacity .35s ease, transform .35s var(--ease), background .35s ease, color .35s ease; }
-.led:hover .led-a { opacity: 1; transform: none; background: var(--gold); color: var(--ink); }
+.led-a { align-self: center; justify-self: end; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(227,199,122,.3); background: rgba(201,161,59,.06); display: flex; align-items: center; justify-content: center; transition: border-color .35s ease, background .35s ease, box-shadow .35s ease; }
+.led-a svg { width: 17px; height: 17px; fill: none; stroke: var(--gold-light); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.led-a path { stroke-dasharray: 20; stroke-dashoffset: 0; }
+/* the tick draws itself when the row scrolls in, and again on hover */
+.js .led.reveal .led-a path { stroke-dashoffset: 20; transition: stroke-dashoffset .6s var(--ease) calc(.25s + var(--i, 0) * .08s); }
+.js .led.reveal.is-in .led-a path { stroke-dashoffset: 0; }
+.led:hover .led-a { border-color: var(--gold-light); background: rgba(201,161,59,.14); box-shadow: 0 0 18px rgba(201,161,59,.25); }
+.led:hover .led-a path { animation: ledTick .6s var(--ease); }
+@keyframes ledTick { from { stroke-dashoffset: 20; } to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) { .js .led.reveal .led-a path { stroke-dashoffset: 0; transition: none; } .led:hover .led-a path { animation: none; } }
 /* keyword: text turns light, a brush stroke draws under it */
 .kw { position: relative; background: none; color: var(--text); padding: 0 1px; white-space: nowrap; }
 .kw::after { content: ''; position: absolute; left: -2px; right: -4px; bottom: -6px; height: 9px;
