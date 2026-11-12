@@ -1679,16 +1679,22 @@ requestAnimationFrame(()=>{ render(VIEWS[startId]); lastPortrait = portrait; });
         } else { n.classList.add('anim'); apply(n, pose(r,to), 1); }
       });
     }
-    reels.forEach(r=>place(r,false));
     narrow.addEventListener('change', ()=>reels.forEach(r=>place(r,false)));
-    if(reduce) return;
-    let timer=null, visible=true;
-    const run=()=>{ if(timer||!visible||document.hidden) return; timer=setInterval(()=>reels.forEach(step), STEP); };
+    if(reduce){ reels.forEach(r=>place(r,false)); return; }
+    // on load: every icon fans out from the centre station, one after another, then the reel starts stepping
+    reels.forEach(r=>r.items.forEach(n=>{ n.classList.remove('anim'); const p=pose(r,2); apply(n,{t:p.t+' scale(.4)',f:'blur(6px)',z:p.z},0); }));
+    let timer=null, visible=true, ready=false;
+    const run=()=>{ if(!ready||timer||!visible||document.hidden) return; timer=setInterval(()=>reels.forEach(step), STEP); };
     const stop=()=>{ clearInterval(timer); timer=null; };
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      reels.forEach(r=>r.items.forEach((n,i)=>{ const k=((i+r.off)%5+5)%5; n.style.transitionDelay=(0.15+Math.abs(k-2)*0.14)+'s'; n.classList.add('anim'); apply(n,pose(r,k),1); }));
+      setTimeout(()=>{ reels.forEach(r=>r.items.forEach(n=>n.style.transitionDelay='')); ready=true; reels.forEach(step); run(); }, 1400);
+    }));
     const hero=document.querySelector('.hero');
     if('IntersectionObserver' in window){ new IntersectionObserver(es=>{ visible=es[0].isIntersecting; visible?run():stop(); }).observe(hero); }
     document.addEventListener('visibilitychange', ()=> document.hidden?stop():run());
-    run();
+    // if the browser paused it, any sign of life restarts it
+    ['pointermove','scroll','focus'].forEach(ev=>addEventListener(ev, run, {passive:true}));
   })();
 })();
 </script>
