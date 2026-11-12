@@ -8,11 +8,15 @@
 <meta name="theme-color" content="#0A0A0C">
 <link rel="icon" href="/assets/img/favicon.png">
 <style>
-.pback{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px 0 10px;margin-right:14px;border-radius:999px;border:1px solid rgba(255,255,255,.22);color:#F2EFE8;font:500 13.5px Inter,sans-serif;text-decoration:none;white-space:nowrap;transition:border-color .25s,background .25s,color .25s}
-.pback svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s}
-.pback:hover{border-color:#E3C77A;color:#E3C77A;background:rgba(201,161,59,.08)}
+.pback{position:relative;overflow:hidden;isolation:isolate;display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 16px 0 11px;margin-right:14px;border-radius:999px;background:#C9A13B;color:#0A0A0C;font:600 13.5px Inter,sans-serif;text-decoration:none;white-space:nowrap;animation:pbPulse 2.6s ease-out infinite;transition:background .25s}
+.pback::after{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);transform:translateX(-120%);animation:pbShine 3.2s ease-in-out infinite}
+.pback svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s}
+.pback:hover{background:#E3C77A;color:#0A0A0C}
 .pback:hover svg{transform:translateX(-3px)}
-@media (max-width:899px){.pback{width:34px;padding:0;justify-content:center;margin-right:10px}.pback span{display:none}}
+@keyframes pbPulse{0%{box-shadow:0 0 0 0 rgba(227,199,122,.55),0 0 20px rgba(201,161,59,.35)}70%{box-shadow:0 0 0 12px rgba(227,199,122,0),0 0 26px rgba(201,161,59,.45)}100%{box-shadow:0 0 0 0 rgba(227,199,122,0),0 0 20px rgba(201,161,59,.35)}}
+@keyframes pbShine{0%,55%{transform:translateX(-120%)}85%,100%{transform:translateX(120%)}}
+@media (max-width:899px){.pback{width:36px;padding:0;justify-content:center;margin-right:10px}.pback span{display:none}}
+@media (prefers-reduced-motion:reduce){.pback,.pback::after{animation:none}}
 </style>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
