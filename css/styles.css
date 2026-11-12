@@ -788,3 +788,24 @@ a.sky-door:hover .arr { transform: translateY(4px); }
 
 }
 @media (prefers-reduced-motion: reduce) { .kw::after { clip-path: none; } }
+
+/* 9. DETAILED VIEW LINK (Digital Marketing → /digital-marketing/growth) ---- */
+.btn-glow { position: relative; overflow: hidden; isolation: isolate; box-shadow: 0 0 0 0 rgba(227,199,122,.55); animation: glowPulse 2.6s ease-out infinite; }
+.btn-glow::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.55) 50%, transparent 70%); transform: translateX(-120%); animation: glowShine 3.2s ease-in-out infinite; }
+.btn-glow span[aria-hidden] { display: inline-block; transition: transform .3s; }
+.btn-glow:hover span[aria-hidden], .dv-band:hover .btn-glow span[aria-hidden] { transform: translateX(4px); }
+@keyframes glowPulse { 0% { box-shadow: 0 0 0 0 rgba(227,199,122,.55), 0 0 24px rgba(201,161,59,.35); } 70% { box-shadow: 0 0 0 14px rgba(227,199,122,0), 0 0 30px rgba(201,161,59,.45); } 100% { box-shadow: 0 0 0 0 rgba(227,199,122,0), 0 0 24px rgba(201,161,59,.35); } }
+@keyframes glowShine { 0%, 55% { transform: translateX(-120%); } 85%, 100% { transform: translateX(120%); } }
+.dv-band { position: relative; overflow: hidden; display: flex; flex-wrap: wrap; gap: 24px; align-items: center; justify-content: space-between; padding: 48px 44px; border-radius: 24px; border: 1px solid rgba(227,199,122,.45); background: #0E0E12; color: var(--text); text-decoration: none; transition: border-color .3s, transform .4s cubic-bezier(.16,1,.3,1); }
+.dv-band:hover { border-color: var(--gold-light); transform: translateY(-3px); color: var(--text); }
+.dv-bg { position: absolute; inset: 0; background: url(../assets/dm-growth/stair-bg.webp) 85% 30%/cover no-repeat; opacity: .35; -webkit-mask-image: linear-gradient(90deg, transparent 25%, #000 75%); mask-image: linear-gradient(90deg, transparent 25%, #000 75%); transition: transform 1.2s cubic-bezier(.16,1,.3,1); }
+.dv-band:hover .dv-bg { transform: scale(1.04); }
+.dv-band::before { content: ''; position: absolute; inset: 0; background: radial-gradient(50% 120% at 0% 0%, rgba(201,161,59,.18), transparent 70%); pointer-events: none; }
+.dv-txt { position: relative; display: flex; flex-direction: column; gap: 10px; max-width: 620px; }
+.dv-txt .eyebrow { margin: 0; }
+.dv-h { font-family: var(--font-display); font-weight: 300; font-size: clamp(28px, 3.4vw, 44px); line-height: 1.1; letter-spacing: -.02em; }
+.dv-h .serif { color: var(--gold-light); }
+.dv-p { color: #C9C9D0; font-size: 16px; line-height: 1.55; }
+.dv-go { position: relative; }
+@media (max-width: 860px) { .dv-band { padding: 30px 22px; } .dv-bg { opacity: .22; -webkit-mask-image: linear-gradient(180deg, transparent 10%, #000 90%); mask-image: linear-gradient(180deg, transparent 10%, #000 90%); } }
+@media (prefers-reduced-motion: reduce) { .btn-glow, .btn-glow::after { animation: none; } .dv-band, .dv-bg { transition: none; } }

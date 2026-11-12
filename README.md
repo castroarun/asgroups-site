@@ -9,6 +9,7 @@ The website for AS Groups, Management & Business Consultant, Chennai. It is a pl
 | Home | `index.html` |
 | Business Setup & Growth | `business-setup.html` |
 | Digital Marketing & Brand Growth | `digital-marketing.html` |
+| Digital Marketing, detailed view (growth loop, services, how we work) | `digital-marketing/growth.html` → `/digital-marketing/growth`. One self-contained page (its own styles and scripts); photos in `assets/dm-growth/`. Linked from the hero button and the "detailed view" band on the Digital Marketing page. |
 | Hospitality & Healthcare | `hospitality-healthcare.html` |
 | Projects | `projects.html` |
 | About | `about.html` |
