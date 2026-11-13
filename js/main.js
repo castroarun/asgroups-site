@@ -379,7 +379,7 @@
       var secs = v.video ? (parseLength(v.length) || 20) : 7;
       story.style.setProperty('--story-dur', secs + 's');
       story.innerHTML = (v.video
-          ? '<div class="story-media" aria-hidden="true"><img class="blur" src="' + v.poster + '" alt=""><video class="clip" src="' + v.video + '" poster="' + v.poster + '" muted autoplay loop playsinline preload="metadata"></video></div>'
+          ? '<div class="story-media" aria-hidden="true"><img class="blur" src="' + v.poster + '" alt=""><video class="clip" src="' + (v.preview || v.video) + '" poster="' + v.poster + '" muted autoplay loop playsinline preload="metadata"></video></div>'
           : '<div class="dots-bg"></div><span class="tagph">[Still from the customer video]</span>') +
         '<div class="sheen"></div>' +
         '<div class="segs">' + S.stories.map(function (_, i) { return '<button type="button" aria-label="Story ' + (i + 1) + '" class="' + (i < si ? 'done' : i === si ? 'now' : '') + '"><i></i></button>'; }).join('') + '</div>' +
