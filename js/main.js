@@ -369,24 +369,56 @@
     counters.forEach(function (el) { countIO.observe(el); });
   } else counters.forEach(function (el) { el.textContent = el.getAttribute('data-count'); });
 
-  // Client stories: auto-advance every 7s
+  // Client stories: auto-advance (7s for placeholders, the full clip for real videos).
+  // A real video plays muted in the card; the play button opens it full height with sound.
   var story = $('#story');
   if (story && S.stories.length) {
-    var si = 0, sTimer = null;
+    var si = 0, sTimer = null, paused = false;
     function drawStory() {
       var v = S.stories[si];
-      story.innerHTML = '<div class="dots-bg"></div><div class="sheen"></div>' +
+      var secs = v.video ? (parseLength(v.length) || 20) : 7;
+      story.style.setProperty('--story-dur', secs + 's');
+      story.innerHTML = (v.video
+          ? '<div class="story-media" aria-hidden="true"><img class="blur" src="' + v.poster + '" alt=""><video class="clip" src="' + v.video + '" poster="' + v.poster + '" muted autoplay loop playsinline preload="metadata"></video></div>'
+          : '<div class="dots-bg"></div><span class="tagph">[Still from the customer video]</span>') +
+        '<div class="sheen"></div>' +
         '<div class="segs">' + S.stories.map(function (_, i) { return '<button type="button" aria-label="Story ' + (i + 1) + '" class="' + (i < si ? 'done' : i === si ? 'now' : '') + '"><i></i></button>'; }).join('') + '</div>' +
-        (v.video ? '' : '<span class="tagph">[Still from the customer video]</span>') +
-        '<button class="play" type="button" aria-label="Play this story">' + ICON.play + '</button>' +
+        '<button class="play" type="button" aria-label="' + (v.video ? 'Watch ' + esc(v.who) + '’s story with sound' : 'Play this story') + '">' + ICON.play + '</button>' +
         '<div class="cap"><p>“' + txt(v.quote) + '”</p><small>' + txt(v.who) + ' · ' + txt(v.length) + '</small></div>';
       $$('.segs button', story).forEach(function (b, i) { b.addEventListener('click', function () { si = i; restart(); }); });
       $('.play', story).addEventListener('click', function () {
-        if (v.video) window.open(v.video, '_blank', 'noopener');
-        else alertInline(story, 'The customer video goes here once it is shared.');
+        if (v.video) openVideo(v); else alertInline(story, 'The customer video goes here once it is shared.');
       });
+      return secs;
     }
-    function restart() { drawStory(); clearInterval(sTimer); if (!reduceMotion) sTimer = setInterval(function () { si = (si + 1) % S.stories.length; drawStory(); }, 7000); }
+    function restart() {
+      clearTimeout(sTimer);
+      var secs = drawStory();
+      if (!reduceMotion && !paused && S.stories.length > 1) sTimer = setTimeout(function () { si = (si + 1) % S.stories.length; restart(); }, secs * 1000);
+    }
+    function parseLength(t) { var m = /^(\d+):(\d{2})$/.exec(t || ''); return m ? (+m[1]) * 60 + (+m[2]) : 0; }
+
+    // Full-height player with sound
+    var vbox = document.createElement('div');
+    vbox.className = 'vbox'; vbox.setAttribute('role', 'dialog'); vbox.setAttribute('aria-modal', 'true'); vbox.setAttribute('aria-label', 'Client video');
+    vbox.innerHTML = '<div class="vbox-bg" data-vclose></div><figure><video controls playsinline></video><figcaption></figcaption></figure><button class="close vbox-x" type="button" data-vclose aria-label="Close video">' + ICON.close + '</button>';
+    document.body.appendChild(vbox);
+    var vEl = $('video', vbox), vLast = null;
+    function openVideo(v) {
+      vLast = document.activeElement; paused = true; clearTimeout(sTimer);
+      vEl.src = v.video; vEl.poster = v.poster || '';
+      $('figcaption', vbox).innerHTML = '“' + txt(v.quote) + '” — ' + txt(v.who);
+      vbox.classList.add('open'); document.body.style.overflow = 'hidden';
+      var p = vEl.play(); if (p && p.catch) p.catch(function () {});
+      $('.vbox-x', vbox).focus();
+    }
+    function closeVideo() {
+      vEl.pause(); vEl.removeAttribute('src'); vEl.load();
+      vbox.classList.remove('open'); document.body.style.overflow = '';
+      paused = false; restart(); if (vLast && vLast.focus) vLast.focus();
+    }
+    vbox.addEventListener('click', function (e) { if (e.target.closest('[data-vclose]')) closeVideo(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && vbox.classList.contains('open')) closeVideo(); });
     restart();
   }
   function alertInline(host, msg) {

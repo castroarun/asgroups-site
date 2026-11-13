@@ -100,9 +100,10 @@ window.SITE = {
   ],
 
   /* Client video stories (left of the testimonials). Add more objects to add more stories.
-     `video` is a file path or YouTube link once you have it; null shows the placeholder. */
+     `video`: path to an .mp4 in assets/video (null shows the placeholder). `poster`: a still from it.
+     Vertical phone videos play in the card over a blurred copy, and open full height when played. */
   stories: [
-    { quote: '[One-line pull quote from the video]', who: '[Client name] · [Business], [Place]', length: '[2:10]', video: null },
+    { quote: 'Together we grow.', who: 'Ashwin · Founder, GDA Academy', length: '0:22', video: 'assets/video/ashwin-gda.mp4', poster: 'assets/video/ashwin-gda-poster.jpg' },
     { quote: '[Second client story — pull quote]', who: '[Client name] · [Business]', length: '[1:45]', video: null },
     { quote: '[Third client story — pull quote]', who: '[Client name] · [Business]', length: '[2:30]', video: null }
   ],
